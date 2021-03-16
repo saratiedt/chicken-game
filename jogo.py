@@ -7,7 +7,7 @@ pygame.init()
 myfont = pygame.font.SysFont('roboto', 30)
 
 endimg = pygame.image.load("img/endgame.png")
-fundo_img = pygame.image.load("img/trees2.jpg")
+fundo_img = pygame.image.load("img/trees.jpg")
 fundo_h = fundo_img.get_height()
 fundo1_y = 0
 fundo2_y = -fundo_h
