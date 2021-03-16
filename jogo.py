@@ -43,7 +43,6 @@ for i in range(len(linhas_altura)):
     inimigos.append([LARGURA//2, linhas_altura[i], INIMIGO_RAIO, randint(VELOCIDADE_MIN, VELOCIDADE_MAX), 0])
 
 # função que transforma coordenadas de sistema cartesiano
-
 def ret_para_cg(n):
     return (int(n[0] + LARGURA/2), int(-1*n[1] + ALTURA/2))
     
@@ -78,9 +77,6 @@ def desenhar_grade(tela, distx, disty):
 
 acabar = False
 
-# criar uma tela
-#tela = pygame.display.set_mode((LARGURA, ALTURA))
-
 # loop principal
 contador = 1
 
@@ -101,26 +97,16 @@ while not acabar:
                 y_personagem = y_personagem - 10
             if event.key == pygame.K_LEFT:
                 x_personagem = x_personagem - 10
-            if event.key == pygame.K_UP: # if keyup para de andar/keydown anda
+            if event.key == pygame.K_UP: 
                 y_personagem = y_personagem + 10
-    #desenhar_grade(tela, 25, 25)
-    
-    
 
-
-    #for i in range(len(linhas_altura)):
-     #   pygame.draw.line(tela, (255,255,255), ret_para_cg((-LARGURA//2,linhas_altura[i])), 
-      #      ret_para_cg((LARGURA//2,linhas_altura[i])), 1)
-
-
-    #pygame.draw.circle(tela, (255, 255, 255),
-            #ret_para_cg((x,y_jogador)), r, 1)
 
     for i in range(len(inimigos)):
-        # trocar a imagem da anição das galinhas e fazer blit
         imagem = inimigos_imagems[(inimigos[i][4]//2)%4]
         tela.blit(imagem,  imagem.get_rect(center=ret_para_cg((inimigos[i][0], inimigos[i][1]))))
-        pygame.draw.circle(tela, (0, 255, 0), ret_para_cg((inimigos[i][0],inimigos[i][1])), INIMIGO_RAIO, 1)
+
+        # desenha raio da galinha
+        #pygame.draw.circle(tela, (0, 255, 0), ret_para_cg((inimigos[i][0],inimigos[i][1])), INIMIGO_RAIO, 1)
         inimigos[i][0] = inimigos[i][0] - inimigos[i][3]
         inimigos[i][4] += 1
         if inimigos[i][0] + inimigos[i][2] <= -LARGURA//2:
@@ -128,13 +114,14 @@ while not acabar:
             inimigos[i][3] = randint(VELOCIDADE_MIN, VELOCIDADE_MAX)
 
     tela.blit(carro, (ret_para_cg((x_personagem-31,y_personagem+38))))
-    pygame.draw.circle(tela, (0, 255, 0), ret_para_cg((x_personagem,y_personagem)), PERSONAGEM_RAIO, 1)
+
+    # desenha raio do carro
+    #pygame.draw.circle(tela, (0, 255, 0), ret_para_cg((x_personagem,y_personagem)), PERSONAGEM_RAIO, 1)
 
     for i in inimigos:
         if colisao((x_personagem,y_personagem,PERSONAGEM_RAIO), (i[0], i[1], i[2])):
             acabar = True
             print("você perdeu")
-    print(VELOCIDADE_MAX)
 
 
     pressed = pygame.key.get_pressed()
@@ -142,15 +129,10 @@ while not acabar:
         y_personagem = y_personagem + VELOCIDADE_CARRO
         fundo1_y += 10
         fundo2_y += 10
-        #inimigos[i][1] +=10
         pos += 10
         if (pos % fundo_h) == 0:
             fundo1_y = 0
             fundo2_y = -fundo_h
-
-#pressed = pygame.key.get_pressed()
- #   if pressed[pygame.K_UP]:
-  #      y_personagem = y_personagem + 10
 
     if acabar == True:
         pygame.display.flip()
@@ -177,9 +159,6 @@ while not acabar:
         pontuacao = pontuacao + 1
         contar[2] = False
     
-        print("cheguei aqui!")
-
-    pontos(str('{:.0f}'.format(pontuacao)), (LARGURA-70, ALTURA-100))
-    print(pontuacao)
+    pontos(str('Pontos: {:.0f}'.format(pontuacao)), (LARGURA-120, ALTURA-50))
     pygame.display.flip()
     relogio.tick(30)
